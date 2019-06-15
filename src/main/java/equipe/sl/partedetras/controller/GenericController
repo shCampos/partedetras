@@ -1,0 +1,76 @@
+package equipe.sl.partedetras.controller;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import equipe.sl.partedetras.exception.ResourceNotFoundException;
+import equipe.sl.partedetras.model.Requerente;
+import equipe.sl.partedetras.model.Requerimento;
+import equipe.sl.partedetras.model.Agendamento;
+import equipe.sl.partedetras.model.Coordenacao;
+import equipe.sl.partedetras.model.Professor;
+import equipe.sl.partedetras.repository.RequerenteRepository;
+import equipe.sl.partedetras.repository.RequerimentoRepository;
+import equipe.sl.partedetras.repository.ProfessorRepository;
+import equipe.sl.partedetras.repository.CoordenacaoRepository;
+import equipe.sl.partedetras.repository.AgendamentoRepository;
+
+@RestController
+@RequestMapping("/api")
+public class GenericController<T>{
+    @Autowired
+    private AgendamentoRepository<T> agendamentoRepository;
+    private CoordenacaoRepository coordenacaoRepository;
+    private ProfessorRepository professorRepository;
+    private RequerenteRepository requerenteRepository;
+    private RequerimentoRepository requerimentoRepository;
+
+
+    @GetMapping("/get/{tipo}")
+    public List<T> getAll(@PathVariable(value = "tipo") String tipo) {
+        
+        for(Requerente requerente: requerenteRepository.findAll())
+            System.out.println(requerente.getNome());
+        
+            List<T> f = new ArrayList<T>();
+        switch(tipo){
+            case "requerente" : f = (List<T>) requerenteRepository.findAll(); break;
+            default: f = (List<T>) requerenteRepository.findAll();break;
+        }
+        System.out.println(f);
+        return f;
+    }
+
+    @PostMapping("/post")
+    public void createRequerente(@Valid @RequestBody T generico) {
+        if(generico instanceof Agendamento){
+            
+            agendamentoRepository.save((Agendamento) generico);
+        }else if(generico instanceof Coordenacao){
+            coordenacaoRepository.save((Coordenacao) generico);
+        }else if(generico instanceof Professor){
+            professorRepository.save((Professor) generico);
+        }else if(generico instanceof Requerente){
+            requerenteRepository.save((Requerente) generico);
+        }else if(generico instanceof Requerimento){
+            requerimentoRepository.save((Requerimento) generico);
+        }
+    }
+
+}
