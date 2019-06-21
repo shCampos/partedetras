@@ -13,6 +13,7 @@ import javax.persistence.Table;
 public class Requerimento{
     private long id;
     private int id_estudante;
+    private String turma_estudante;
     private String materia;
     private int id_professor;
     private String justificativa;
@@ -22,8 +23,9 @@ public class Requerimento{
 
     public Requerimento(){ }
 
-    public Requerimento(int id_estudante, String materia, int id_professor, String justificativa, String anexo, String status, String hash){
+    public Requerimento(int id_estudante, String turma_estudante, String materia, int id_professor, String justificativa, String anexo, String status, String hash){
         this.id_estudante = id_estudante;
+        this.turma_estudante = turma_estudante;
         this.materia = materia;
         this.id_professor = id_professor;
         this.justificativa = justificativa;
@@ -47,6 +49,14 @@ public class Requerimento{
     }
     public void setId_estudante(int id_estudante) {
         this.id_estudante = id_estudante;
+    }
+
+    @Column(name = "turma_estudante", nullable = false)
+    public String getTurma_estudante(){
+        return turma_estudante;
+    }
+    public void setTurma_estudante(String turma_estudante){
+        this.turma_estudante = turma_estudante;
     }
 
     @Column(name = "materia", nullable = false)
@@ -99,7 +109,7 @@ public class Requerimento{
 
     @Override
     public String toString() {
-        return "Requerimento [id=" + id + ", id_estudante=" + id_estudante + ", materia=" + materia + ", id_professor=" + id_professor + 
+        return "Requerimento [id=" + id + ", id_estudante=" + id_estudante + ", turma_estudante" + turma_estudante + ", materia=" + materia + ", id_professor=" + id_professor + 
         ", justificativa=" + justificativa + ", anexo=" + anexo + ", status=" + status + ",hash=" + hash + "]";
     }
 }

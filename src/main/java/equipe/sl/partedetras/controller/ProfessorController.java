@@ -35,7 +35,7 @@ public class ProfessorController {
 
     @GetMapping("")
     public String Hello(){
-        return "ta funcionando";
+        return "Hello, World!";
     }
     @GetMapping("/professor")
     public List<Professor> getAllProfessor() {
