@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,9 +15,16 @@ import javax.persistence.Table;
 public class Requerimento{
     private long id;
     private int id_estudante;
+    @ManyToOne(optional=false) 
+    @JoinColumn(name="id_estudante", nullable=false, updatable=false)
+    private Alunos aluno;
+
     private String turma_estudante;
     private String materia;
     private int id_professor;
+    @ManyToOne(optional=false) 
+    @JoinColumn(name="id_professor", nullable=false, updatable=false)
+    public Professor professor; 
     private String justificativa;
     private String anexo;
     private String status;

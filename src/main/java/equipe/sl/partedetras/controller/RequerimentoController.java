@@ -43,9 +43,9 @@ public class RequerimentoController {
     }
 
     @GetMapping("/requerimento/prof/{prof}")
-    public List<Object> getRequerimentoByProf(@PathVariable(value = "prof") long requerimentoProf){
+    public List<Object> getRequerimentoByProf(@PathVariable(value = "prof") long profId){
         List<Object> lista = new ArrayList<>();
-        lista = requerimentoRepository.findTudoProf(requerimentoProf);
+        lista = requerimentoRepository.findTudoProf(profId);
         return lista;
     }
 
@@ -71,9 +71,9 @@ public class RequerimentoController {
     }
 
     @GetMapping("/requerimento/est/{id_est}")
-    public List<Requerimento> getRequerimentoByEstId(@PathVariable(value= "id_est") Integer estudanteId){
+    public List<Object> getRequerimentoByEstId(@PathVariable(value= "id_est") long estudanteId){
         System.out.print("IOAHSOIAHSIO"+estudanteId);
-        List<Requerimento> lista = new ArrayList<>();
+        List<Object> lista = new ArrayList<>();
         lista = requerimentoRepository.findByEstId(estudanteId);
         System.out.print("UEHUEEHUEH"+requerimentoRepository.findByEstId(estudanteId));
         return lista;
