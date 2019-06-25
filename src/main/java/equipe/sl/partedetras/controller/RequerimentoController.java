@@ -31,8 +31,22 @@ public class RequerimentoController {
     private RequerimentoRepository requerimentoRepository;
 
     @GetMapping("/requerimento")
-    public List<Requerimento> getAllRequerimento() {
-        return requerimentoRepository.findAll();
+    public List<Object> getAllRequerimento() {
+        return requerimentoRepository.findTudo();
+    }
+
+    @GetMapping("/requerimento/coord/{coord}")
+    public List<Object> getRequerimentoByCoord(@PathVariable(value = "coord") String requerimentoCoordenacao){
+        List<Object> lista = new ArrayList<>();
+        lista = requerimentoRepository.findTudoCoord(requerimentoCoordenacao);
+        return lista;
+    }
+
+    @GetMapping("/requerimento/prof/{prof}")
+    public List<Object> getRequerimentoByProf(@PathVariable(value = "prof") long requerimentoProf){
+        List<Object> lista = new ArrayList<>();
+        lista = requerimentoRepository.findTudoProf(requerimentoProf);
+        return lista;
     }
 
     @GetMapping("/requerimento/status/{status}")

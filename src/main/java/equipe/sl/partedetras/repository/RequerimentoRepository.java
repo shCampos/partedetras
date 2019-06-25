@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import equipe.sl.partedetras.model.Requerimento;
+import equipe.sl.partedetras.model.Alunos;
+import equipe.sl.partedetras.model.Professor;
 
 @Repository
 public interface RequerimentoRepository extends JpaRepository<Requerimento, Long>{
@@ -20,4 +22,13 @@ public interface RequerimentoRepository extends JpaRepository<Requerimento, Long
     
     @Query("SELECT r FROM Requerimento r WHERE status =:status")
     public List<Requerimento> findByStatus(@Param("status") String status);
+
+    @Query("SELECT r, a, p FROM Requerimento r INNER JOIN Alunos a ON r.id_estudante = a.id INNER JOIN Professor p ON r.id_professor = p.id")
+    public List<Object> findTudo();
+
+    @Query("SELECT r, a, p FROM Requerimento r INNER JOIN Alunos a ON r.id_estudante = a.id AND a.coordenacao=:coordenacao INNER JOIN Professor p ON r.id_professor = p.id")
+    public List<Object> findTudoCoord(@Param("coordenacao") String coordenacao);
+
+    @Query("SELECT r, a, p FROM Requerimento r INNER JOIN Alunos a ON r.id_estudante = a.id INNER JOIN Professor p ON r.id_professor = p.id AND p.id=:id_professor")
+    public List<Object> findTudoProf(@Param("id_professor") long id_professor);
 }
